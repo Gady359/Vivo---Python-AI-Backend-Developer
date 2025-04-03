@@ -40,7 +40,7 @@ Apesar do conteúdo das videoaulas ser instrutivo, um ponto crítico observado f
 Para tornar as aulas mais inclusivas e acessíveis:
 1. **Adicionar seções específicas para usuários Windows** nas videoaulas e materiais complementares.
 2. Fornecer orientações para resolver diferenças de dependências e comandos.
-3. Criar scripts ou tutoriais genéricos que funcionem em múltiplos sistemas operacionais (Windows, Linux e MacOS).
+3. Criar scripts ou tutoriais genéricos que funcionem em múltiplos sistemas operacionais (Windows, Linux e macOS).
 
 ---
 
