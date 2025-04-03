@@ -20,7 +20,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: repo-vivo_ai_back.zip
-          path: Desafios_Projetos
+          path: |
+                Desafios_Projetos
                 Desafios_Codigo
                 
 
