@@ -23,6 +23,17 @@ jobs:
           path: |
                 Desafios_Projetos
                 Desafios_Codigo
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: delivery
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: repo-vivo_ai_back.zip
+      - name: Display structure of download files
+        run: ls -R
+    
                 
 
           
