@@ -1,0 +1,26 @@
+# This workflow executes several linters on changed files based on languages used in your code base whenever
+# you push a code or open a pull request.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/github/super-linter
+name: Continuous Delivery Test
+
+on:
+  push:
+    branches: [ "main" ]
+  
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repo-vivo_ai_back.zip
+          path: repo-vivo_ai_back.zip
+
+          
+      
