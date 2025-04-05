@@ -16,3 +16,6 @@ SQLAlchemy==2.0.19
 starlette==0.27.0
 typing_extensions==4.7.1
 uvicorn==0.23.1
+
+
+//Usada quando o projeto foi criado, mas não é mais necessária 
