@@ -34,16 +34,15 @@ jobs:
       - name: Display structure of download files
         run: ls -R
 
-  discord:
-    runs-on: ubuntu-latest
-    steps:
+discord:
+  runs-on: ubuntu-latest
+  steps:
+  - uses: actions/checkout@v4
 
-    - uses: actions/checkout@v4
-
-    - name : Run Discord Webhook
-      uses: johnnyhuy/actions-discord-git-webhook@main
-      with:
-        webhook_url:${{ secrets.DISCORD_WEBHOOK }}
+  - name : Run Discord Webhook
+    uses: johnnyhuy/actions-discord-git-webhook@main
+    with:
+      webhook_url:${{ secrets.DISCORD_WEBHOOK }}
     
                 
 
