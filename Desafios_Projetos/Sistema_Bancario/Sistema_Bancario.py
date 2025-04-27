@@ -1,18 +1,19 @@
 import textwrap
 
 
-def menu():
-    menu = """\n
+def menu(input_func=input):
+    menu_text = """
     ================ MENU ================
-    [d]\tDepositar
-    [s]\tSacar
-    [e]\tExtrato
-    [nc]\tNova conta
-    [lc]\tListar contas
-    [nu]\tNovo usuário
-    [q]\tSair
-    => """
-    return input(textwrap.dedent(menu))
+    [d]     Depositar
+    [s]     Sacar
+    [e]     Extrato
+    [nc]    Nova conta
+    [lc]    Listar contas
+    [nu]    Novo usuário
+    [q]     Sair
+    =>
+    """
+    return input_func(textwrap.dedent(menu_text))
 
 
 def depositar(saldo, valor, extrato, /):
@@ -59,21 +60,20 @@ def exibir_extrato(saldo, /, *, extrato):
     print("==========================================")
 
 
-def criar_usuario(usuarios):
-    cpf = input("Informe o CPF (somente número): ")
+def criar_usuario(usuarios, input_func=input, output_func=print):
+    cpf = input_func("Informe o CPF (somente número): ")
     usuario = filtrar_usuario(cpf, usuarios)
 
     if usuario:
-        print("\n@@@ Já existe usuário com esse CPF! @@@")
+        output_func("\n@@@ Já existe usuário com esse CPF! @@@")
         return
 
-    nome = input("Informe o nome completo: ")
-    data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
-    endereco = input("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
+    nome = input_func("Informe o nome completo: ")
+    data_nascimento = input_func("Informe a data de nascimento (dd-mm-aaaa): ")
+    endereco = input_func("Informe o endereço (logradouro, nro - bairro - cidade/sigla estado): ")
 
-    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
-
-    print("=== Usuário criado com sucesso! ===")
+    usuarios.append({"nome": nome, "cpf": cpf, "data_nascimento": data_nascimento, "endereco": endereco})
+    output_func("\n=== Usuário criado com sucesso! ===")
 
 
 def filtrar_usuario(cpf, usuarios):
@@ -157,4 +157,5 @@ def main():
             print("Operação inválida, por favor selecione novamente a operação desejada.")
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,9 @@
 import pytest
+from unittest.mock import patch
 
-# filepath: e:\Faculdade PUCPR\DevOps\AS1\Vivo---Python-AI-Backend-Developer\Desafios_Projetos\Sistema_Bancario\test_Sistema Bancário.py
-from Sistema_Bancário import depositar, sacar, exibir_extrato, criar_usuario, criar_conta, filtrar_usuario
+from Sistema_Bancario import depositar, sacar, exibir_extrato, criar_usuario, criar_conta, filtrar_usuario, menu
+
+
 
 
 def test_depositar():
@@ -42,22 +44,41 @@ def test_exibir_extrato(capsys):
 
 def test_criar_usuario():
     usuarios = []
-    criar_usuario(usuarios)
-    assert len(usuarios) == 1
-    assert usuarios[0]["cpf"] == "12345678900"  # Replace with test input
 
-    criar_usuario(usuarios)
-    assert len(usuarios) == 1  # No duplicate users
+    def mock_input(prompt):
+        return mock_inputs.pop(0)
+
+    def mock_output(message):
+        mock_outputs.append(message)
+
+    # Testar criação de usuário
+    mock_inputs = ["12345678900", "Test User", "01-01-2000", "Test Address"]
+    mock_outputs = []
+    criar_usuario(usuarios, input_func=mock_input, output_func=mock_output)
+    assert len(usuarios) == 1
+    assert usuarios[0]["nome"] == "Test User"
+    assert usuarios[0]["cpf"] == "12345678900"
+    assert "\n=== Usuário criado com sucesso! ===" in mock_outputs
+
+    # Testar duplicação de usuário
+    mock_inputs = ["12345678900", "Test User", "01-01-2000", "Test Address"]
+    mock_outputs = []
+    criar_usuario(usuarios, input_func=mock_input, output_func=mock_output)
+    assert len(usuarios) == 1  # Não deve adicionar duplicatas
+    assert "\n@@@ Já existe usuário com esse CPF! @@@" in mock_outputs
 
 
 def test_criar_conta():
     usuarios = [{"nome": "Test User", "cpf": "12345678900", "data_nascimento": "01-01-2000", "endereco": "Test Address"}]
     contas = []
-    conta = criar_conta("0001", 1, usuarios)
+    with patch("builtins.input", side_effect=["12345678900"]):
+        conta = criar_conta("0001", 1, usuarios)
     assert conta is not None
     assert conta["agencia"] == "0001"
     assert conta["numero_conta"] == 1
     assert conta["usuario"]["cpf"] == "12345678900"
 
-    conta = criar_conta("0001", 2, [])
+    # Testar com CPF inexistente
+    with patch("builtins.input", side_effect=["00000000000"]):
+        conta = criar_conta("0001", 2, usuarios)
     assert conta is None
